@@ -47,7 +47,7 @@ jobs:
 
       - name: Install Sentinel SCA
         run: |
-          git clone --depth 1 --branch v1.0.0 https://github.com/PrinceORavens/sentinel-sca.git /tmp/sentinel-sca
+          git clone --depth 1 --branch main https://github.com/PrinceORavens/sentinel-sca.git /tmp/sentinel-sca
           cd /tmp/sentinel-sca && npm install --omit=dev && npm link
 
       - name: Run SCA Scan
@@ -59,9 +59,11 @@ jobs:
           sentinel-sca scan \
             --path . \
             --ecosystem maven \
+            --include-dev \
             --output sarif,html \
             --file sentinel-results \
             --fail-on ${{ inputs.fail_on || 'critical' }} \
+            --no-cache \
             --baseline
         continue-on-error: true
 
